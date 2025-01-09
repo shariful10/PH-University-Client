@@ -3,7 +3,7 @@ import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import { Button } from "antd";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const Login = () => {
 	const dispatch = useAppDispatch();
@@ -14,9 +14,9 @@ const Login = () => {
 		},
 	});
 
-	const [login, { error }] = useLoginMutation();
+	const [login] = useLoginMutation();
 
-	const onSubmit = async (data) => {
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const userInfo = {
 			id: data.id,
 			password: data.password,

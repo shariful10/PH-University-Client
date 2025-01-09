@@ -1,4 +1,5 @@
 import App from "@/App";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import { routeGenerator } from "@/utils/routesGenerator";
@@ -10,7 +11,11 @@ import { studentPaths } from "./student.routes";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <App />,
+		element: (
+			<ProtectedRoute>
+				<App />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/admin",
