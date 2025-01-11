@@ -1,10 +1,6 @@
 import { RootState } from "@/redux/store";
+import { TAuthState } from "@/types/redux.type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type TAuthState = {
-	user: null | object;
-	token: null | string;
-};
 
 const initialState: TAuthState = {
 	user: null,
