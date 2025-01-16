@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 type TInputProps = {
 	type: string;
 	name: string;
-	label: string;
+	label?: string;
 };
 
 const PHInput = ({ type, name, label }: TInputProps) => {
