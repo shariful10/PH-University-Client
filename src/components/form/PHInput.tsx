@@ -1,4 +1,4 @@
-import { TPHInputProps } from "@/types/form.type";
+import { TPHInputProps } from "@/types";
 import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 

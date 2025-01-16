@@ -1,4 +1,4 @@
-import { TPHSelectProps } from "@/types/form.type";
+import { TPHSelectProps } from "@/types";
 import { Form, Select } from "antd";
 import { Controller } from "react-hook-form";
 

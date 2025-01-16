@@ -1,4 +1,4 @@
-import { TFormConfig, TFormProps } from "@/types/form.type";
+import { TFormConfig, TFormProps } from "@/types";
 import { Form } from "antd";
 import { FormProvider, useForm } from "react-hook-form";
 
