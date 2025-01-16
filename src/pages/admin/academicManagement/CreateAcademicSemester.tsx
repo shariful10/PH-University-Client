@@ -2,6 +2,7 @@ import PHForm from "@/components/form/PHForm";
 import PHSelect from "@/components/form/PHSelect";
 import { monthOptions } from "@/constants/global";
 import { semesterOptions } from "@/constants/semester";
+import { useAddAcademicSemesterMutation } from "@/redux/features/admin/academicManagement.api";
 import { academicSemesterSchema } from "@/schemas/academicManagement.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Flex } from "antd";
@@ -15,7 +16,8 @@ const yearOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => ({
 }));
 
 const CreateAcademicSemester = () => {
-	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+	const [addAcademicSemester] = useAddAcademicSemesterMutation();
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const name = semesterOptions[Number(data.name) - 1]?.label;
 
 		const semesterData = {
@@ -26,7 +28,13 @@ const CreateAcademicSemester = () => {
 			endMonth: data.endMonth,
 		};
 
-		console.log(semesterData);
+		try {
+			console.log(semesterData);
+			const res = await addAcademicSemester(semesterData).unwrap();
+			console.log(res);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

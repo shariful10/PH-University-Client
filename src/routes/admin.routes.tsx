@@ -70,14 +70,4 @@ export const adminPaths = [
 			},
 		],
 	},
-	{
-		name: "Course Management",
-		children: [
-			{
-				name: "Offered Course",
-				path: "offered-course",
-				element: <CreateAdmin />,
-			},
-		],
-	},
 ];
