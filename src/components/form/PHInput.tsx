@@ -1,16 +1,10 @@
+import { TPHInputProps } from "@/types/form.type";
 import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 
-type TInputProps = {
-	type: string;
-	name: string;
-	label?: string;
-};
-
-const PHInput = ({ type, name, label }: TInputProps) => {
+const PHInput = ({ type, name, label }: TPHInputProps) => {
 	return (
 		<div style={{ marginBottom: "1rem" }}>
-			{/* {label && <label htmlFor={name}>{label}</label>} */}
 			<Controller
 				name={name}
 				render={({ field }) => (
