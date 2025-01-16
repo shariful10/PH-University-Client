@@ -13,7 +13,14 @@ const PHInput = ({ type, name, label }: TInputProps) => {
 			{label && <label htmlFor={name}>{label}</label>}
 			<Controller
 				name={name}
-				render={({ field }) => <Input {...field} type={type} id={name} />}
+				render={({ field }) => (
+					<Input
+						{...field}
+						type={type}
+						id={name}
+						style={{ marginTop: "6px" }}
+					/>
+				)}
 			/>
 		</div>
 	);

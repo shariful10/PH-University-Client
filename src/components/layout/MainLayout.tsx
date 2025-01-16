@@ -1,8 +1,8 @@
 import { logOut } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { Button, Layout } from "antd";
+import { toast } from "react-hot-toast";
 import { Outlet, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import Sidebar from "./Sidebar";
 const { Header, Content, Footer } = Layout;
 
