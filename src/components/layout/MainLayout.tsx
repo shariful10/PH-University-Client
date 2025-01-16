@@ -34,7 +34,7 @@ const MainLayout = () => {
 					</div>
 				</Content>
 				<Footer style={{ textAlign: "center" }}>
-					Ant Design ©{new Date().getFullYear()} Created by Ant UED
+					PH University © {new Date().getFullYear()} | Powered by PH University
 				</Footer>
 			</Layout>
 		</Layout>
