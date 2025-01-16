@@ -4,9 +4,11 @@ import { monthOptions } from "@/constants/global";
 import { semesterOptions } from "@/constants/semester";
 import { useAddAcademicSemesterMutation } from "@/redux/features/admin/academicManagement.api";
 import { academicSemesterSchema } from "@/schemas/academicManagement.schema";
+import { TResponse } from "@/types/global.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Flex } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const currentYear = new Date().getFullYear();
 
@@ -29,11 +31,15 @@ const CreateAcademicSemester = () => {
 		};
 
 		try {
-			console.log(semesterData);
-			const res = await addAcademicSemester(semesterData).unwrap();
-			console.log(res);
+			const res = (await addAcademicSemester(semesterData)) as TResponse;
+
+			if (res.error) {
+				toast.error(res.error.data.message);
+			} else {
+				toast.success("Academic semester created successfully!");
+			}
 		} catch (err) {
-			console.log(err);
+			toast.error("Something went wrong! Please try again.");
 		}
 	};
 
