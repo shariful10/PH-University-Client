@@ -3,7 +3,7 @@ import PHInput from "@/components/form/PHInput";
 import { useLoginMutation } from "@/redux/features/auth/auhApi";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { TUser } from "@/types/redux.type";
+import { TUser } from "@/types";
 import { verifyToken } from "@/utils/verifyToken";
 import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";

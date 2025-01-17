@@ -1,5 +1,5 @@
 import { RootState } from "@/redux/store";
-import { TAuthState } from "@/types/redux.type";
+import { TAuthState } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: TAuthState = {

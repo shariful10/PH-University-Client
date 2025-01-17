@@ -9,3 +9,8 @@ export type TAcademicSemester = {
 	updatedAt: string;
 	__v?: number;
 };
+
+export type TTableData = Pick<
+	TAcademicSemester,
+	"_id" | "name" | "year" | "startMonth" | "endMonth"
+>;
