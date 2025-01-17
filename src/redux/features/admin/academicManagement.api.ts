@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { TAcademicSemester, TResponseRedux } from "@/types";
+import { TAcademicSemester, TQueryParam, TResponseRedux } from "@/types";
 
 const academicManagementApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -8,8 +8,8 @@ const academicManagementApi = baseApi.injectEndpoints({
 				const params = new URLSearchParams();
 
 				if (args) {
-					args.forEach((item) => {
-						params.append(item.name, item.value);
+					args.forEach((item: TQueryParam) => {
+						params.append(item.name, item.value as string);
 					});
 				}
 

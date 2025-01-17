@@ -12,5 +12,5 @@ export type TAcademicSemester = {
 
 export type TTableData = Pick<
 	TAcademicSemester,
-	"_id" | "name" | "year" | "startMonth" | "endMonth"
+	"name" | "year" | "startMonth" | "endMonth"
 >;
