@@ -71,8 +71,20 @@ const academicManagementApi = baseApi.injectEndpoints({
 			}),
 		}),
 		getAcademicDepartments: builder.query({
-			query: () => {
-				return { url: "/academic-departments", method: "GET" };
+			query: (args) => {
+				const params = new URLSearchParams();
+
+				if (args) {
+					args.forEach((item: TQueryParam) => {
+						params.append(item.name, item.value as string);
+					});
+				}
+
+				return {
+					url: "/academic-departments",
+					method: "GET",
+					params: params,
+				};
 			},
 			transformResponse: (response: TResponseRedux<TAcademicDepartment[]>) => {
 				return {

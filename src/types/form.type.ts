@@ -10,7 +10,8 @@ export type TPHInputProps = {
 export type TPHSelectProps = {
 	label: string;
 	name: string;
-	options: { value: string; label: string; disabled?: boolean }[];
+	options: { value: string; label: string; disabled?: boolean }[] | undefined;
+	disabled?: boolean;
 };
 
 export type TFormConfig = {
@@ -22,3 +23,8 @@ export type TFormProps = {
 	onSubmit: SubmitHandler<FieldValues>;
 	children: ReactNode;
 } & TFormConfig;
+
+export type TDatePickerProps = {
+	name: string;
+	label?: string;
+};

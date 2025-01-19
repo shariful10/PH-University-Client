@@ -18,7 +18,8 @@ const Sidebar = () => {
 	const user = useAppSelector(selectCurrentUser);
 
 	let sidebarItems;
-	switch (user?.role) {
+
+	switch (user!.role) {
 		case userRole.ADMIN:
 			sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
 			break;
@@ -28,6 +29,7 @@ const Sidebar = () => {
 		case userRole.STUDENT:
 			sidebarItems = sidebarItemsGenerator(studentPaths, userRole.STUDENT);
 			break;
+
 		default:
 			break;
 	}
@@ -36,15 +38,15 @@ const Sidebar = () => {
 		<Sider
 			breakpoint="lg"
 			collapsedWidth="0"
-			style={{ height: "100vh", position: "sticky", top: 0, left: 0 }}
+			style={{ height: "100vh", position: "sticky", top: "0", left: "0" }}
 		>
 			<div
 				style={{
 					color: "white",
 					height: "4rem",
 					display: "flex",
-					alignItems: "center",
 					justifyContent: "center",
+					alignItems: "center",
 				}}
 			>
 				<h1>PH University</h1>

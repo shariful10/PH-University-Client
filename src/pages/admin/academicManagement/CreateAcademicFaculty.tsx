@@ -20,7 +20,7 @@ const CreateAcademicFaculty = () => {
 			if (res.error) {
 				toast.error(res?.error?.data?.message);
 			} else {
-				toast.success("Academic faculty created successfully!");
+				toast.success("Academic faculty is created successfully!");
 			}
 		} catch (err) {
 			toast.error("Something went wrong! Please try again.");

@@ -1,26 +1,22 @@
 import { logOut } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { Button, Layout } from "antd";
-import { toast } from "react-hot-toast";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
-	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
 	const handleLogout = () => {
 		dispatch(logOut());
-		toast.success("Logout successful!");
-		navigate("/login");
 	};
 
 	return (
-		<Layout style={{ height: "100vh" }}>
+		<Layout style={{ height: "100%" }}>
 			<Sidebar />
 			<Layout>
-				<Header>
+				<Header style={{ position: "sticky", top: 0, zIndex: 1 }}>
 					<Button onClick={handleLogout}>Logout</Button>
 				</Header>
 				<Content style={{ margin: "24px 16px 0" }}>
@@ -33,9 +29,6 @@ const MainLayout = () => {
 						<Outlet />
 					</div>
 				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					PH University © {new Date().getFullYear()} | Powered by PH University
-				</Footer>
 			</Layout>
 		</Layout>
 	);
