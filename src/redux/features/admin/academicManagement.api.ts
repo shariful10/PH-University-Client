@@ -40,8 +40,21 @@ const academicManagementApi = baseApi.injectEndpoints({
 			}),
 		}),
 		getAcademicFaculties: builder.query({
-			query: () => {
-				return { url: "/academic-faculties", method: "GET" };
+			query: (args) => {
+				const params = new URLSearchParams();
+
+				if (args) {
+					args.forEach((item: TQueryParam) => {
+						params.append(item.name, item.value as string);
+					});
+				}
+				console.log("args", args);
+
+				return {
+					url: "/academic-faculties",
+					method: "GET",
+					params: params,
+				};
 			},
 			transformResponse: (response: TResponseRedux<TAcademicFaculty[]>) => {
 				return {
@@ -78,5 +91,11 @@ const academicManagementApi = baseApi.injectEndpoints({
 	}),
 });
 
-export const { useGetAllSemestersQuery, useAddAcademicSemesterMutation } =
-	academicManagementApi;
+export const {
+	useGetAllSemestersQuery,
+	useAddAcademicSemesterMutation,
+	useAddAcademicFacultyMutation,
+	useGetAcademicFacultiesQuery,
+	useAddAcademicDepartmentMutation,
+	useGetAcademicDepartmentsQuery,
+} = academicManagementApi;

@@ -1,7 +1,7 @@
 import { useGetAllSemestersQuery } from "@/redux/features/admin/academicManagement.api";
 import { TQueryParam, TTableData } from "@/types";
 import { Button, Table, TableColumnsType, TableProps } from "antd";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const AcademicSemester = () => {
 	const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
@@ -17,42 +17,26 @@ const AcademicSemester = () => {
 		})
 	);
 
+	const nameFilters = useMemo(() => {
+		const names = semesterData?.data?.map(({ name }) => name) || [];
+		return [...new Set(names)].map((name) => ({ text: name, value: name }));
+	}, [semesterData]);
+
+	const yearFilters = useMemo(() => {
+		const years = semesterData?.data?.map(({ year }) => year) || [];
+		return [...new Set(years)].map((year) => ({ text: year, value: year }));
+	}, [semesterData]);
+
 	const columns: TableColumnsType<TTableData> = [
 		{
 			title: "Name",
 			dataIndex: "name",
-			filters: [
-				{
-					text: "Autumn",
-					value: "Autumn",
-				},
-				{
-					text: "Summer",
-					value: "Summer",
-				},
-				{
-					text: "Fall",
-					value: "Fall",
-				},
-			],
+			filters: nameFilters,
 		},
 		{
 			title: "Year",
 			dataIndex: "year",
-			filters: [
-				{
-					text: 2025,
-					value: 2025,
-				},
-				{
-					text: 2026,
-					value: 2026,
-				},
-				{
-					text: 2027,
-					value: 2027,
-				},
-			],
+			filters: yearFilters,
 		},
 		{
 			title: "Start Month",

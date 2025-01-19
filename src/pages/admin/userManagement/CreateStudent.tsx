@@ -1,6 +1,6 @@
 import PHForm from "@/components/form/PHForm";
 import PHInput from "@/components/form/PHInput";
-import { Button } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const studentDummyData = {
@@ -42,22 +42,35 @@ const studentDummyData = {
 
 const CreateStudent = () => {
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		// console.log(data);
+		console.log(data);
 
-		const formDta = new FormData();
-		formDta.append("data", JSON.stringify(data));
-		console.log(Object.fromEntries(formDta));
+		// const formDta = new FormData();
+		// formDta.append("data", JSON.stringify(data));
+		// console.log(Object.fromEntries(formDta));
 	};
 
 	return (
-		<PHForm onSubmit={onSubmit}>
-			<PHInput type="text" label="First Name" name="firstName" />
-			<PHInput type="text" label="Middle Name" name="middleName" />
-			<PHInput type="text" label="Last Name" name="lastName" />
-			<Button type="primary" htmlType="submit">
-				Submit
-			</Button>
-		</PHForm>
+		<Row>
+			<Col span={24}>
+				<PHForm onSubmit={onSubmit}>
+					<Divider>Personal Info</Divider>
+					<Row gutter={8}>
+						<Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+							<PHInput type="text" label="First Name" name="name.firstName" />
+						</Col>
+						<Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+							<PHInput type="text" label="Middle Name" name="name.middleName" />
+						</Col>
+						<Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+							<PHInput type="text" label="Last Name" name="name.lastName" />
+						</Col>
+					</Row>
+					<Button type="primary" htmlType="submit">
+						Submit
+					</Button>
+				</PHForm>
+			</Col>
+		</Row>
 	);
 };
 

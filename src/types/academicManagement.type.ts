@@ -23,6 +23,8 @@ export type TAcademicFaculty = {
 	__v: number;
 };
 
+export type TAcademicDepartmentTableData = Pick<TAcademicDepartment, "name">;
+
 export type TAcademicDepartment = {
 	_id: string;
 	name: string;
