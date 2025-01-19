@@ -1,4 +1,4 @@
-export type TUser = {
+export type TLoggedUser = {
 	userId: string;
 	role: string;
 	iat: number;
@@ -6,6 +6,6 @@ export type TUser = {
 };
 
 export type TAuthState = {
-	user: null | TUser;
+	user: null | TLoggedUser;
 	token: null | string;
 };

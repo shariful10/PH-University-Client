@@ -2,11 +2,11 @@ import App from "@/App";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import { routeGenerator } from "@/utils/routesGenerator";
 import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
 import { facultyPaths } from "./faculty.routes";
 import { studentPaths } from "./student.routes";
+import { routeGenerator } from "@/utils";
 
 const router = createBrowserRouter([
 	{

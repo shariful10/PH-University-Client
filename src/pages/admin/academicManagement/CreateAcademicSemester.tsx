@@ -1,21 +1,14 @@
 import PHForm from "@/components/form/PHForm";
 import PHSelect from "@/components/form/PHSelect";
 import { monthOptions } from "@/constants/global";
-import { semesterOptions } from "@/constants/semester";
+import { semesterOptions, yearOptions } from "@/constants/semester";
 import { useAddAcademicSemesterMutation } from "@/redux/features/admin/academicManagement.api";
 import { academicSemesterSchema } from "@/schemas/academicManagement.schema";
-import { TResponse } from "@/types/global.type";
+import { TAcademicSemester, TResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Flex } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
-
-const currentYear = new Date().getFullYear();
-
-const yearOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => ({
-	value: String(currentYear + number),
-	label: String(currentYear + number),
-}));
 
 const CreateAcademicSemester = () => {
 	const [addAcademicSemester] = useAddAcademicSemesterMutation();
@@ -31,7 +24,9 @@ const CreateAcademicSemester = () => {
 		};
 
 		try {
-			const res = (await addAcademicSemester(semesterData)) as TResponse;
+			const res = (await addAcademicSemester(
+				semesterData
+			)) as TResponse<TAcademicSemester>;
 
 			if (res.error) {
 				toast.error(res.error.data.message);
@@ -58,7 +53,9 @@ const CreateAcademicSemester = () => {
 						options={monthOptions}
 					/>
 					<PHSelect label="End Month" name="endMonth" options={monthOptions} />
-					<Button htmlType="submit">Submit</Button>
+					<Button type="primary" htmlType="submit">
+						Submit
+					</Button>
 				</PHForm>
 			</Col>
 		</Flex>

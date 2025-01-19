@@ -3,7 +3,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { adminPaths } from "@/routes/admin.routes";
 import { facultyPaths } from "@/routes/faculty.routes";
 import { studentPaths } from "@/routes/student.routes";
-import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
+import { sidebarItemsGenerator } from "@/utils";
 import { Layout, Menu } from "antd";
 
 const { Sider } = Layout;

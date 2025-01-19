@@ -3,8 +3,8 @@ import PHInput from "@/components/form/PHInput";
 import { useLoginMutation } from "@/redux/features/auth/auhApi";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { TUser } from "@/types";
-import { verifyToken } from "@/utils/verifyToken";
+import { TLoggedUser } from "@/types";
+import { verifyToken } from "@/utils";
 import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -36,7 +36,7 @@ const Login = () => {
 			};
 
 			const res = await login(userInfo).unwrap();
-			const user = verifyToken(res.data.accessToken) as TUser;
+			const user = verifyToken(res.data.accessToken) as TLoggedUser;
 			dispatch(setUser({ user: user, token: res.data.accessToken }));
 			toast.success("Login successful!");
 			navigate(`/${user?.role}/dashboard`);
@@ -52,7 +52,9 @@ const Login = () => {
 			<PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
 				<PHInput label="Id:" type="text" name="id" />
 				<PHInput label="Password:" type="text" name="password" />
-				<Button htmlType="submit">{isLoading ? "Login..." : "Login"}</Button>
+				<Button type="primary" htmlType="submit">
+					{isLoading ? "Login..." : "Login"}
+				</Button>
 			</PHForm>
 		</Row>
 	);
