@@ -1,3 +1,4 @@
+import StudentBlockModal from "@/components/userManagement/StudentBlockModal";
 import { useGetAllStudentsQuery } from "@/redux/features/admin/userManagement.api";
 import { TQueryParam, TStudentData } from "@/types";
 import {
@@ -12,8 +13,9 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 const StudentData = () => {
+	const [page, setPage] = useState<number>(1);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [params, setParams] = useState<TQueryParam[]>([]);
-	const [page, setPage] = useState(1);
 	const { data: studentData, isFetching } = useGetAllStudentsQuery([
 		{ name: "limit", value: 3 },
 		{ name: "page", value: page },
@@ -32,6 +34,20 @@ const StudentData = () => {
 			contactNo,
 		})
 	);
+
+	console.log("tableData", tableData);
+
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 
 	const emailFilters = useMemo(() => {
 		const emails = studentData?.data?.map(({ email }) => email) || [];
@@ -82,9 +98,13 @@ const StudentData = () => {
 						<Button color="primary" variant="outlined">
 							Update
 						</Button>
-						<Button color="danger" variant="outlined">
-							Block
-						</Button>
+						<StudentBlockModal
+							studentId={item?.key}
+							handleOk={handleOk}
+							showModal={showModal}
+							handleCancel={handleCancel}
+							isModalOpen={isModalOpen}
+						/>
 					</Space>
 				);
 			},
