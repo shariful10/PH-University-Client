@@ -9,6 +9,7 @@ import {
 	TableProps,
 } from "antd";
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 const StudentData = () => {
 	const [params, setParams] = useState<TQueryParam[]>([]);
@@ -22,12 +23,15 @@ const StudentData = () => {
 
 	const metaData = studentData?.meta;
 
-	const tableData = studentData?.data?.map(({ _id, fullName, id, email }) => ({
-		key: _id,
-		fullName,
-		id,
-		email,
-	}));
+	const tableData = studentData?.data?.map(
+		({ _id, fullName, id, email, contactNo }) => ({
+			key: _id,
+			fullName,
+			id,
+			email,
+			contactNo,
+		})
+	);
 
 	const emailFilters = useMemo(() => {
 		const emails = studentData?.data?.map(({ email }) => email) || [];
@@ -59,14 +63,22 @@ const StudentData = () => {
 			filters: emailFilters,
 		},
 		{
+			title: "Contact No.",
+			key: "contactNo",
+			dataIndex: "contactNo",
+			// filters: emailFilters,
+		},
+		{
 			title: "Action",
 			key: "x",
-			render: () => {
+			render: (item) => {
 				return (
 					<Space>
-						<Button color="purple" variant="outlined">
-							Details
-						</Button>
+						<Link to={`/admin/student-data/${item.key}`}>
+							<Button color="purple" variant="outlined">
+								Details
+							</Button>
+						</Link>
 						<Button color="primary" variant="outlined">
 							Update
 						</Button>
