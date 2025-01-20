@@ -17,7 +17,7 @@ export type TSemesterData = Pick<
 	"name" | "year" | "startMonth" | "endMonth"
 >;
 
-export type TStudentData = Pick<TStudent, "name" | "id">;
+export type TStudentData = Pick<TStudent, "fullName" | "id">;
 
 export type TAcademicFaculty = {
 	_id: string;

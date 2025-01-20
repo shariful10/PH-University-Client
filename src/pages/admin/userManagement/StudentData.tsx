@@ -1,11 +1,26 @@
 import { useGetAllStudentsQuery } from "@/redux/features/admin/userManagement.api";
 import { TQueryParam, TStudentData } from "@/types";
-import { Button, Space, Table, TableColumnsType, TableProps } from "antd";
-import { useState } from "react";
+import {
+	Button,
+	Pagination,
+	Space,
+	Table,
+	TableColumnsType,
+	TableProps,
+} from "antd";
+import { useMemo, useState } from "react";
 
 const StudentData = () => {
-	const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-	const { data: studentData, isFetching } = useGetAllStudentsQuery(params);
+	const [params, setParams] = useState<TQueryParam[]>([]);
+	const [page, setPage] = useState(1);
+	const { data: studentData, isFetching } = useGetAllStudentsQuery([
+		{ name: "limit", value: 3 },
+		{ name: "page", value: page },
+		{ name: "sort", value: "id" },
+		...params,
+	]);
+
+	const metaData = studentData?.meta;
 
 	const tableData = studentData?.data?.map(({ _id, fullName, id, email }) => ({
 		key: _id,
@@ -14,10 +29,10 @@ const StudentData = () => {
 		email,
 	}));
 
-	// const nameFilters = useMemo(() => {
-	// 	const names = studentData?.data?.map(({ name }) => name) || [];
-	// 	return [...new Set(names)].map((name) => ({ text: name, value: name }));
-	// }, [studentData]);
+	const emailFilters = useMemo(() => {
+		const emails = studentData?.data?.map(({ email }) => email) || [];
+		return [...new Set(emails)].map((email) => ({ text: email, value: email }));
+	}, [studentData]);
 
 	// const yearFilters = useMemo(() => {
 	// 	const years = studentData?.data?.map(({ year }) => year) || [];
@@ -41,7 +56,7 @@ const StudentData = () => {
 			title: "Email Address",
 			key: "email",
 			dataIndex: "email",
-			// filters: nameFilters,
+			filters: emailFilters,
 		},
 		{
 			title: "Action",
@@ -74,8 +89,8 @@ const StudentData = () => {
 		if (extra.action === "filter") {
 			const queryParams: TQueryParam[] = [];
 
-			filters.name?.forEach((item) =>
-				queryParams.push({ name: "name", value: item })
+			filters.email?.forEach((item) =>
+				queryParams.push({ name: "email", value: item })
 			);
 
 			filters.year?.forEach((item) =>
@@ -87,12 +102,21 @@ const StudentData = () => {
 	};
 
 	return (
-		<Table<TStudentData>
-			loading={isFetching}
-			columns={columns}
-			dataSource={tableData}
-			onChange={onChange}
-		/>
+		<>
+			<Table<TStudentData>
+				loading={isFetching}
+				columns={columns}
+				dataSource={tableData}
+				onChange={onChange}
+				pagination={false}
+			/>
+			<Pagination
+				current={page}
+				onChange={(value) => setPage(value)}
+				pageSize={metaData?.limit}
+				total={metaData?.total}
+			/>
+		</>
 	);
 };
 
