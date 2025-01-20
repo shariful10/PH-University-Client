@@ -1,3 +1,5 @@
+import { TStudent } from "./userManagement.type";
+
 export type TAcademicSemester = {
 	_id: string;
 	name: string;
@@ -10,10 +12,12 @@ export type TAcademicSemester = {
 	__v?: number;
 };
 
-export type TTableData = Pick<
+export type TSemesterData = Pick<
 	TAcademicSemester,
 	"name" | "year" | "startMonth" | "endMonth"
 >;
+
+export type TStudentData = Pick<TStudent, "name" | "id">;
 
 export type TAcademicFaculty = {
 	_id: string;

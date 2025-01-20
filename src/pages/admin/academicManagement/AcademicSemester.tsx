@@ -1,5 +1,5 @@
 import { useGetAllSemestersQuery } from "@/redux/features/admin/academicManagement.api";
-import { TQueryParam, TTableData } from "@/types";
+import { TQueryParam, TSemesterData } from "@/types";
 import { Button, Table, TableColumnsType, TableProps } from "antd";
 import { useMemo, useState } from "react";
 
@@ -27,7 +27,7 @@ const AcademicSemester = () => {
 		return [...new Set(years)].map((year) => ({ text: year, value: year }));
 	}, [semesterData]);
 
-	const columns: TableColumnsType<TTableData> = [
+	const columns: TableColumnsType<TSemesterData> = [
 		{
 			title: "Name",
 			dataIndex: "name",
@@ -59,34 +59,7 @@ const AcademicSemester = () => {
 		},
 	];
 
-	// const data: DataType[] = [
-	// 	{
-	// 		key: "1",
-	// 		name: "John Brown",
-	// 		age: 32,
-	// 		address: "New York No. 1 Lake Park",
-	// 	},
-	// 	{
-	// 		key: "2",
-	// 		name: "Jim Green",
-	// 		age: 42,
-	// 		address: "London No. 1 Lake Park",
-	// 	},
-	// 	{
-	// 		key: "3",
-	// 		name: "Joe Black",
-	// 		age: 32,
-	// 		address: "Sydney No. 1 Lake Park",
-	// 	},
-	// 	{
-	// 		key: "4",
-	// 		name: "Jim Red",
-	// 		age: 32,
-	// 		address: "London No. 2 Lake Park",
-	// 	},
-	// ];
-
-	const onChange: TableProps<TTableData>["onChange"] = (
+	const onChange: TableProps<TSemesterData>["onChange"] = (
 		_pagination,
 		filters,
 		_sorter,
@@ -108,7 +81,7 @@ const AcademicSemester = () => {
 	};
 
 	return (
-		<Table<TTableData>
+		<Table<TSemesterData>
 			loading={isFetching}
 			columns={columns}
 			dataSource={tableData}
