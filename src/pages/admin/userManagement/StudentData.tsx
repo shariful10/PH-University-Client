@@ -17,7 +17,7 @@ const StudentData = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [params, setParams] = useState<TQueryParam[]>([]);
 	const { data: studentData, isFetching } = useGetAllStudentsQuery([
-		{ name: "limit", value: 3 },
+		{ name: "limit", value: 10 },
 		{ name: "page", value: page },
 		{ name: "sort", value: "id" },
 		...params,
@@ -34,8 +34,6 @@ const StudentData = () => {
 			contactNo,
 		})
 	);
-
-	console.log("tableData", tableData);
 
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -143,6 +141,7 @@ const StudentData = () => {
 				pagination={false}
 			/>
 			<Pagination
+				style={{ marginTop: "10px" }}
 				current={page}
 				onChange={(value) => setPage(value)}
 				pageSize={metaData?.limit}

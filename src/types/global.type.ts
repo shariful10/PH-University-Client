@@ -31,3 +31,7 @@ export type TQueryParam = {
 	name: string;
 	value: boolean | Key;
 };
+
+export type TMessage = {
+	message: string;
+};

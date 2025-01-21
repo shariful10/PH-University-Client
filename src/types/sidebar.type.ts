@@ -1,16 +1,18 @@
 import { ReactNode } from "react";
 
 export type TRoute = {
-	path: string;
+	path: string | undefined;
 	element: ReactNode;
 };
 
-export type TUserPath = {
-	name: string;
-	path?: string;
-	element?: ReactNode;
-	children?: TUserPath[];
-};
+export type TUserPath =
+	| {
+			name: string;
+			path?: string;
+			element?: ReactNode;
+			children?: TUserPath[];
+	  }
+	| undefined;
 
 export type TSidebarItem =
 	| {

@@ -2,11 +2,12 @@ import App from "@/App";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import { TUserPath } from "@/types";
+import { routeGenerator } from "@/utils";
 import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
 import { facultyPaths } from "./faculty.routes";
 import { studentPaths } from "./student.routes";
-import { routeGenerator } from "@/utils";
 
 const router = createBrowserRouter([
 	{
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
 	{
 		path: "/admin",
 		element: <App />,
-		children: routeGenerator(adminPaths),
+		children: routeGenerator(adminPaths as TUserPath[]),
 	},
 	{
 		path: "/faculty",
