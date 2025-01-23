@@ -30,20 +30,24 @@ const AcademicSemester = () => {
 	const columns: TableColumnsType<TSemesterData> = [
 		{
 			title: "Name",
+			key: "name",
 			dataIndex: "name",
 			filters: nameFilters,
 		},
 		{
 			title: "Year",
+			key: "year",
 			dataIndex: "year",
 			filters: yearFilters,
 		},
 		{
 			title: "Start Month",
+			key: "startMonth",
 			dataIndex: "startMonth",
 		},
 		{
 			title: "End Month",
+			key: "endMonth",
 			dataIndex: "endMonth",
 		},
 		{

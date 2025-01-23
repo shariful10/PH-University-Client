@@ -12,6 +12,11 @@ export type TSemester = {
 	updatedAt: string;
 };
 
+export type TRegisteredSemesterData = Pick<
+	TSemester,
+	"status" | "startDate" | "endDate"
+>;
+
 export type TCourse = {
 	_id: string;
 	title: string;
