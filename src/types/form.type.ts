@@ -5,6 +5,7 @@ export type TPHInputProps = {
 	type: string;
 	name: string;
 	label?: string;
+	disabled?: boolean;
 };
 
 export type TPHSelectProps = {

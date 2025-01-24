@@ -1,34 +1,42 @@
 import PHForm from "@/components/form/PHForm";
 import PHInput from "@/components/form/PHInput";
 import PHSelect from "@/components/form/PHSelect";
-import { useGetAllSemestersQuery } from "@/redux/features/admin/academicManagement.api";
-import { useAddRegisteredSemesterMutation } from "@/redux/features/admin/courseManagement";
-import { TMessage, TRegistrationSemester, TResponse } from "@/types";
+import {
+	useAddCourseMutation,
+	useGetAllCoursesQuery,
+} from "@/redux/features/admin/courseManagement";
+import { TCourse, TMessage, TResponse } from "@/types";
 import { Button, Col, Flex } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const CreateCourse = () => {
-	const [addSemester] = useAddRegisteredSemesterMutation();
-	const { data: academicSemester } = useGetAllSemestersQuery([
-		{ name: "sort", value: "year" },
-	]);
+	const [createCourse] = useAddCourseMutation();
+	const { data: courses } = useGetAllCoursesQuery(undefined);
+	// const { data: academicSemester } = useGetAllSemestersQuery([
+	// 	{ name: "sort", value: "year" },
+	// ]);
 
-	const academicSemesterOptions = academicSemester?.data?.map((item) => ({
+	const preRequisiteCoursesOptions = courses?.data?.map((item) => ({
 		value: item._id,
-		label: `${item.name} ${item.year}`,
+		label: item.title,
 	}));
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const semesterData = {
+		const courseData = {
 			...data,
-			minCredit: Number(data.minCredit),
-			maxCredit: Number(data.maxCredit),
+			code: Number(data.code),
+			credits: Number(data.credits),
+			isDeleted: false,
+			preRequisiteCourses: data.preRequisiteCourses?.map((item: string) => ({
+				course: item,
+				isDeleted: false,
+			})),
 		};
 
 		try {
-			const res = (await addSemester(semesterData)) as TResponse<
-				TRegistrationSemester & TMessage
+			const res = (await createCourse(courseData)) as TResponse<
+				TCourse & TMessage
 			>;
 
 			if (res.error) {
@@ -46,12 +54,12 @@ const CreateCourse = () => {
 			<Col span={6}>
 				<PHForm onSubmit={onSubmit}>
 					<PHInput type="text" name="title" label="Title" />
-					<PHInput type="number" name="prefix" label="Prefix" />
+					<PHInput type="text" name="prefix" label="Prefix" />
 					<PHInput type="number" name="code" label="Code" />
-					<PHInput type="number" name="Credits" label="Credits" />
+					<PHInput type="number" name="credits" label="Credits" />
 					<PHSelect
 						mode="multiple"
-						options={academicSemesterOptions}
+						options={preRequisiteCoursesOptions}
 						name="preRequisiteCourses"
 						label="Pre Requisite Courses"
 					/>
