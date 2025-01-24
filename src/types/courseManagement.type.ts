@@ -27,7 +27,7 @@ export type TCourse = {
 	isDeleted: boolean;
 };
 
-type TSemesterStatus = "UPCOMING" | "ONGOING" | "ENDED";
+export type TSemesterStatus = "UPCOMING" | "ONGOING" | "ENDED";
 
 export type TRegistrationSemester = {
 	_id: string;
@@ -40,4 +40,13 @@ export type TRegistrationSemester = {
 	createdAt: Date;
 	updatedAt: Date;
 	__v: number;
+};
+
+export type TMenuItem = {
+	key: string;
+	label?: string;
+};
+
+export type TStatusUpdate = {
+	key: string;
 };

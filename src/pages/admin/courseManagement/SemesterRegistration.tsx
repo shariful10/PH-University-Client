@@ -28,8 +28,6 @@ const SemesterRegistration = () => {
 			maxCredit: Number(data.maxCredit),
 		};
 
-		console.log(semesterData);
-
 		try {
 			const res = (await addSemester(semesterData)) as TResponse<
 				TRegistrationSemester & TMessage

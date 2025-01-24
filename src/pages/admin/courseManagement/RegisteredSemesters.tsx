@@ -1,9 +1,21 @@
-import { useGetAllRegisteredSemestersQuery } from "@/redux/features/admin/courseManagement";
-import { TRegisteredSemesterData } from "@/types";
+import {
+	useGetAllRegisteredSemestersQuery,
+	useUpdateRegisteredSemesterMutation,
+} from "@/redux/features/admin/courseManagement";
+import {
+	TMenuItem,
+	TMessage,
+	TRegisteredSemesterData,
+	TResponse,
+	TSemesterStatus,
+	TStatusUpdate,
+} from "@/types";
 import { Button, Dropdown, Table, TableColumnsType, Tag } from "antd";
 import moment from "moment";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
-const items = [
+const items: TMenuItem[] = [
 	{
 		label: "Upcoming",
 		key: "UPCOMING",
@@ -20,8 +32,10 @@ const items = [
 
 const RegisteredSemester = () => {
 	// const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
+	const [semesterId, setSemesterId] = useState("");
 	const { data: semesterData, isFetching } =
 		useGetAllRegisteredSemestersQuery(undefined);
+	const [updateSemesterStatus] = useUpdateRegisteredSemesterMutation();
 
 	const tableData = semesterData?.data?.map(
 		({ _id, academicSemester, startDate, endDate, status }) => ({
@@ -33,24 +47,31 @@ const RegisteredSemester = () => {
 		})
 	);
 
-	const handleStatusDropdown = (data) => {
-		console.log("data", data);
+	const handleStatusUpdate = async ({ key }: TStatusUpdate) => {
+		const updateData = {
+			id: semesterId,
+			data: { status: key },
+		};
+
+		try {
+			const res = (await updateSemesterStatus(updateData)) as TResponse<
+				TSemesterStatus & TMessage
+			>;
+
+			if (res.error) {
+				toast.error(res.error.data.message);
+			} else {
+				toast.success(res?.data!.message);
+			}
+		} catch (err) {
+			toast.error("Something went wrong");
+		}
 	};
 
 	const menuProps = {
 		items,
-		onClick: handleStatusDropdown,
+		onClick: handleStatusUpdate,
 	};
-
-	// const nameFilters = useMemo(() => {
-	// 	const names = semesterData?.data?.map(({ name }) => name) || [];
-	// 	return [...new Set(names)].map((name) => ({ text: name, value: name }));
-	// }, [semesterData]);
-
-	// const yearFilters = useMemo(() => {
-	// 	const years = semesterData?.data?.map(({ year }) => year) || [];
-	// 	return [...new Set(years)].map((year) => ({ text: year, value: year }));
-	// }, [semesterData]);
 
 	const columns: TableColumnsType<TRegisteredSemesterData> = [
 		{
@@ -87,36 +108,15 @@ const RegisteredSemester = () => {
 		{
 			title: "Action",
 			key: "x",
-			render: () => {
+			render: (item) => {
 				return (
-					<Dropdown menu={menuProps}>
-						<Button>Update</Button>
+					<Dropdown menu={menuProps} trigger={["click"]}>
+						<Button onClick={() => setSemesterId(item?.key)}>Update</Button>
 					</Dropdown>
 				);
 			},
 		},
 	];
-
-	// const onChange: TableProps<TSemesterData>["onChange"] = (
-	// 	_pagination,
-	// 	filters,
-	// 	_sorter,
-	// 	extra
-	// ) => {
-	// 	if (extra.action === "filter") {
-	// 		const queryParams: TQueryParam[] = [];
-
-	// 		filters.name?.forEach((item) =>
-	// 			queryParams.push({ name: "name", value: item })
-	// 		);
-
-	// 		filters.year?.forEach((item) =>
-	// 			queryParams.push({ name: "year", value: item })
-	// 		);
-
-	// 		setParams(queryParams);
-	// 	}
-	// };
 
 	return (
 		<Table<TRegisteredSemesterData>
