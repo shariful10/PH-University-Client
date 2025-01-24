@@ -12,6 +12,7 @@ export type TPHSelectProps = {
 	name: string;
 	options: { value: string; label: string; disabled?: boolean }[] | undefined;
 	disabled?: boolean;
+	mode?: "multiple" | undefined;
 };
 
 export type TFormConfig = {
