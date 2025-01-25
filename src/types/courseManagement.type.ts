@@ -17,13 +17,18 @@ export type TRegisteredSemesterData = Pick<
 	"status" | "startDate" | "endDate"
 >;
 
+type TPreRequisiteCourses = {
+	course: string | null;
+	isDeleted: boolean;
+}[];
+
 export type TCourse = {
 	_id: string;
 	title: string;
 	prefix: string;
 	code: number;
 	credits: number;
-	preRequisiteCourses: { course: string | null; isDeleted: boolean }[];
+	preRequisiteCourses: TPreRequisiteCourses;
 	isDeleted: boolean;
 };
 
@@ -49,4 +54,12 @@ export type TMenuItem = {
 
 export type TStatusUpdate = {
 	key: string;
+};
+
+export type TCourseTableData = Pick<TCourse, "title" | "code">;
+
+export type TCourseColumnData = {
+	key: string;
+	title: string;
+	code: string;
 };

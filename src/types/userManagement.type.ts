@@ -60,3 +60,43 @@ export type TUser = {
 	needsPasswordChange: boolean;
 	__v: number;
 };
+
+export type TBloodGroup =
+	| "A+"
+	| "A-"
+	| "B+"
+	| "B-"
+	| "AB+"
+	| "AB-"
+	| "O+"
+	| "O-";
+
+export type TFaculty = {
+	_id: string;
+	id: string;
+	user: TUser;
+	designation: string;
+	name: TName;
+	gender: string;
+	dateOfBirth: string;
+	email: string;
+	contactNo: string;
+	emergencyContactNo: string;
+	bloodGroup: TBloodGroup;
+	presentAddress: string;
+	permanentAddress: string;
+	profileImg?: string;
+	academicDepartment: string;
+	academicFaculty: string;
+	isDeleted: boolean;
+	fullName: string;
+	__v: number;
+};
+
+type TFacultyInfo = {
+	key: string;
+};
+
+export type TFacultyInfoProps = {
+	facultyInfo: TFacultyInfo;
+};
