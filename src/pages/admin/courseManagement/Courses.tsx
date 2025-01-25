@@ -5,10 +5,17 @@ import {
 	useGetAllCoursesQuery,
 } from "@/redux/features/admin/courseManagement";
 import { useGetAllFacultiesQuery } from "@/redux/features/admin/userManagement.api";
-import { TCourseColumnData, TFacultyInfoProps } from "@/types";
+import {
+	TCourseColumnData,
+	TFaculty,
+	TFacultyInfoProps,
+	TMessage,
+	TResponse,
+} from "@/types";
 import { Button, Modal, Table } from "antd";
 import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const Courses = () => {
 	// const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
@@ -74,15 +81,25 @@ const AddFacultyModal = ({ facultyInfo }: TFacultyInfoProps) => {
 		label: item.fullName,
 	}));
 
-	const handleSubmit: SubmitHandler<FieldValues> = (data) => {
+	const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const facultyData = {
 			courseId: facultyInfo.key,
 			data,
 		};
 
-		console.log(facultyData);
+		try {
+			const res = (await addFaculties(facultyData)) as TResponse<
+				TFaculty & TMessage
+			>;
 
-		// addFaculties(facultyData);
+			if (res.error) {
+				toast.error(res.error.data.message);
+			} else {
+				toast.success(res?.data!.message);
+			}
+		} catch (error) {
+			toast.error("Failed to assign faculties!");
+		}
 	};
 
 	const showModal = () => {
@@ -109,7 +126,9 @@ const AddFacultyModal = ({ facultyInfo }: TFacultyInfoProps) => {
 						name="faculties"
 						label="Faculty"
 					/>
-					<Button htmlType="submit">Submit</Button>
+					<Button htmlType="submit" type="primary">
+						Submit
+					</Button>
 				</PHForm>
 			</Modal>
 		</>
